@@ -21,7 +21,13 @@
 		><d2l-input-text
 			aria-autocomplete="list"
 			aria-controls$="[[_prefix('d2l-autocomplete')]]"
+			aria-describedby$="[[ariaDescribedby]]"
+			aria-invalid$="[[ariaInvalid]]"
+			aria-label$="[[ariaLabel]]"
+			aria-labelledby$="[[ariaLabelledby]]"
 			aria-owns$="[[_prefix('d2l-autocomplete')]]"
+			aria-haspopup="listbox"
+			autofocus$="[[autofocus]]"
 			id="[[_prefix('d2l-input-text')]]"
 			placeholder$="[[placeholder]]"
 			role="combobox"
@@ -67,6 +73,22 @@
 					/**
 					* These properties are used by d2l-input-text
 					*/
+					ariaDescribedby: {
+						type: String
+					},
+					ariaInvalid: {
+						type: String,
+					},
+					ariaLabel: {
+						type: String,
+					},
+					ariaLabelledby: {
+						type: String,
+					},
+					autofocus: {
+						type: Boolean,
+						value: false,
+					},
 					placeholder: {
 						type: String,
 					},

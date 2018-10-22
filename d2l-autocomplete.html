@@ -57,14 +57,15 @@
 				no-pointer
 				vertical-offset="0"
 			><ul id="d2l-autocomplete-list">
-				<template is="dom-repeat" items="{{_suggestions}}">
+				<template is="dom-repeat" items="[[_suggestions]]">
 					<li
 						aria-selected="false"
 						class="d2l-autocomplete-suggestion"
 						on-click="_onSuggestionSelected"
 						role="option"
 						tabindex="-1"
-					><span class="d2l-autocomplete-suggestion-highlighted">{{_computeBoldText(item.value, _boldedText)}}</span>{{_computeText(item.value, _boldedText)}}
+						text-value$="[[item.value]]"
+					><span role="option" class="d2l-autocomplete-suggestion-highlighted">[[_computeBoldText(item.value, _boldedText)]]</span>[[_computeText(item.value, _boldedText)]]
 					</li>
 				</template>
 			</ul></d2l-dropdown-content>
@@ -151,7 +152,7 @@
 					*/
 					_suggestions: {
 						type: Array,
-						value: [],
+						value: function() { return [] },
 						observer: '_suggestionsChanged'
 					},
 					/**
@@ -159,7 +160,7 @@
 					*/
 					data: {
 						type: Array,
-						value: [],
+						value: function() { return [] },
 					},
 					/**
 					* Function used to filter `data`
@@ -314,7 +315,9 @@
 
 				this._dropdownIndex = -1;
 				this._input.value = selection;
+				this._input.setAttribute('aria-activedescendant', '');
 				this._filter = '';
+
 
 				this.dispatchEvent(new CustomEvent(
 					'd2l-autocomplete-suggestion-selected',
@@ -330,14 +333,21 @@
 				return text.slice(boldedText.length);
 			}
 
-			_dropdownIndexChanged(index, oldIndex) {
+			_dropdownIndexChanged(index, previousIndex) {
 				Polymer.RenderStatus.afterNextRender(this, function() {
 					const suggestionsListChildren = this.$['d2l-autocomplete-list'].children;
-					if (oldIndex >= 0 && oldIndex < suggestionsListChildren.length) {
-						suggestionsListChildren[oldIndex].setAttribute('aria-selected', false);
+					const previousSuggestion = suggestionsListChildren[previousIndex];
+					const newSuggestion = suggestionsListChildren[index];
+
+					if (previousIndex >= 0 && previousIndex < suggestionsListChildren.length) {
+						previousSuggestion.setAttribute('aria-selected', false);
 					}
 					if (index >= 0 && index < suggestionsListChildren.length) {
-						suggestionsListChildren[index].setAttribute('aria-selected', true);
+						newSuggestion.setAttribute('aria-selected', true);
+					}
+					if (newSuggestion && newSuggestion.getAttribute('text-value')) {
+						this._input.setAttribute('aria-activedescendant',
+							newSuggestion.getAttribute('text-value'));
 					}
 				}.bind(this));
 			}

@@ -31,7 +31,12 @@
 			<demo-snippet>
 				<template>
 					<h4 id="demo-input-text-selected">Selection: None</h4>
-					<d2l-autocomplete-input-text id="demo-input-text" class="autocomplete-input" placeholder="Enter a state"></d2l-autocomplete-input-text>
+					<d2l-autocomplete-input-text
+						aria-label="Enter a state"
+						class="autocomplete-input"
+						id="demo-input-text"
+						placeholder="Enter a state"
+					></d2l-autocomplete-input-text>
 				</template>
 			</demo-snippet>
 			<h3>d2l-autocomplete (custom)</h3>
@@ -39,8 +44,13 @@
 				<template>
 					<h4 id="demo-custom-selected">Selection: None</h4>
 					<d2l-autocomplete select-first id="demo-custom" show-on-focus>
-						<input slot="input" id="demo-custom-input" class="autocomplete-input" placeholder="Enter a state">
-					</d2l-autocomplete>
+						<input
+							aria-label="Enter a state"
+							class="autocomplete-input"
+							id="demo-custom-input"
+							placeholder="Enter a state"
+							slot="input"
+						></d2l-autocomplete>
 				</template>
 			</demo-snippet>
 			<h3>d2l-autocomplete (remote source)</h3>
@@ -48,8 +58,13 @@
 				<template>
 					<h4 id="demo-remote-source-selected">Selection: None</h4>
 					<d2l-autocomplete remote-source id="demo-remote-source" show-on-focus>
-						<input slot="input" id="demo-remote-source-input" class="autocomplete-input" placeholder="Enter a state">
-					</d2l-autocomplete>
+						<input
+							aria-label="Enter a state"
+							class="autocomplete-input"
+							id="demo-remote-source-input"
+							placeholder="Enter a state"
+							slot="input"
+						></d2l-autocomplete>
 				</template>
 			</demo-snippet>
 		</div>

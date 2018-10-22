@@ -8,6 +8,8 @@
 		<script src="../../web-component-tester/browser.js"></script>
 		<script src="../../iron-test-helpers/mock-interactions.js"></script>
 		<script src="../../iron-test-helpers/test-helpers.js"></script>
+		<script src="../node_modules/attest/attest.js"></script>
+		<script src="./ally-test-script.js"></script>
 		<link rel="import" href="../all-imports.html">
 	</head>
 	<body>
@@ -15,7 +17,7 @@
 			<template>
 				<div>
 					<d2l-autocomplete id="basic-test">
-						<input slot="input">
+						<input aria-label="basic-test-autocomplete" slot="input">
 					</d2l-autocomplete>
 				</div>
 			</template>
@@ -25,7 +27,7 @@
 				<div>
 
 					<d2l-autocomplete remote-source id="remote-source-test">
-						<input slot="input">
+						<input aria-label="remote-source-autocomplete" slot="input">
 					</d2l-autocomplete>
 				</div>
 			</template>
@@ -206,6 +208,33 @@
 						const textFromSuggestions = Array.prototype.slice.call(getSuggestionElements())
 							.map(function(element) { return element.innerText; });
 						expect(textFromSuggestions).to.deep.equal(expectedSuggestions);
+					});
+				});
+
+				describe('accessibility', function() {
+					describe('basic', function() {
+						before(function() {
+							fixture('basic');
+						});
+
+						it('should pass attest run', function() {
+							if (!isAttestInstalled()) {
+								this.skip();
+							}
+							return ally_tests();
+						});
+					});
+					describe('remote-source', function() {
+						before(function() {
+							fixture('remote-source');
+						});
+
+						it('should pass attest run', function() {
+							if (!isAttestInstalled()) {
+								this.skip();
+							}
+							return ally_tests();
+						});
 					});
 				});
 
